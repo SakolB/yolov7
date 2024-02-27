@@ -8,6 +8,9 @@ def run_detect(weights, source, img_size):
     subprocess.run(command)
 
 def find_latest_exp_directory(base_directory):
+    """
+    Finds the latest 'exp*' directory in the base directory.
+    """
     exp_directories = list(base_directory.glob('exp*'))
     if not exp_directories:
         return None
@@ -15,6 +18,9 @@ def find_latest_exp_directory(base_directory):
     return latest_directory
 
 def find_latest_txt_file(exp_directory):
+    """
+    Finds the latest .txt file in the 'labels' directory of the experiment directory.
+    """
     txt_files = list(exp_directory.glob('labels/*.txt'))
     if not txt_files:
         return None
@@ -22,6 +28,17 @@ def find_latest_txt_file(exp_directory):
     return latest_file
 
 def cut_and_save_chunks(latest_file, source_image_path, save_directory):
+    """
+    Cuts and saves chunks from an image based on the bounding box coordinates provided in a file.
+
+    Args:
+        latest_file (str): The path to the file containing the bounding box coordinates.
+        source_image_path (str): The path to the source image.
+        save_directory (str): The directory where the chunks will be saved.
+
+    Returns:
+        None
+    """
     img = cv2.imread(source_image_path)
     img_height, img_width = img.shape[:2]
 
